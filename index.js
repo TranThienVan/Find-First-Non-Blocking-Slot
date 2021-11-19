@@ -20,30 +20,29 @@ let FFNBS = function(inputs, duration) {
 
     
     // Sort the array according to the startTime
-    let result = inputs.sort((a, b) =>  a.startTime - b.startTime)
-    let e_max = result[0].endTime
+    let inputSorted = inputs.sort((a, b) =>  a.startTime - b.startTime)
+    let endTimeMax = inputSorted[0].endTime
    
-    for (let i = 0; i < result.length - 1; i++) {
-        let siNext = result[i+1].startTime
-        let ei = result[i].endTime
-        
+    for (let i = 0; i < inputSorted.length - 1; i++) {
+        let startTimeNext = inputSorted[i+1].startTime
+        let endTime = inputSorted[i].endTime
 
-        if (ei >= e_max){
-            e_max = ei
+        if (endTime >= endTimeMax){
+            endTimeMax = endTime
         }
         
-        if (siNext - ei >= duration) {
-            return {startTime: ei, endTime: ei + duration}
+        if (startTimeNext - endTime >= duration) {
+            return {startTime: endTime, endTime: endTime + duration}
         }
             
     }
-    if(e_max < result[result.length-1].endTime){
-        e_max = result[result.length-1].endTime
+    if(endTimeMax < inputSorted[inputSorted.length-1].endTime){
+        endTimeMax = inputSorted[inputSorted.length-1].endTime
     }
 
     return {
-        startTime: e_max, 
-        endTime: e_max + duration
+        startTime: endTimeMax, 
+        endTime: endTimeMax + duration
     }
 
 }
